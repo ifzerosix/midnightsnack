@@ -4,7 +4,7 @@ The story genre is "Comedy".
 The release number is 5. 
 The story description is "You awaken in the middle of the night craving a snack. The story can be won in as little as 30 moves, but one misstep along the way could result in a cascading comedy of errors and a night of insomnia."
 The story creation year is 2023.
-Release along with an introductory postcard, a public solution, a website, the source text, and an interpreter.
+Release along with the introductory booklet, introductory postcard, a public solution, a website, the source text, a file of "License" called "License.html" and an interpreter.
 
 Volume 1 - Extensions
 
