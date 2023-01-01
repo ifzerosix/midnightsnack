@@ -4,7 +4,7 @@ The story genre is "Comedy".
 The release number is 5. 
 The story description is "You awaken in the middle of the night craving a snack. The story can be won in as little as 30 moves, but one misstep along the way could result in a cascading comedy of errors and a night of insomnia."
 The story creation year is 2023.
-Release along with the introductory booklet, introductory postcard, a public solution, a website, the source text, a file of "License" called "License.html" and an interpreter.
+Release along with the introductory booklet, introductory postcard, a website, the source text, a file of "License" called "License.txt" and an interpreter.
 
 Volume 1 - Extensions
 
@@ -1842,3 +1842,7 @@ To Win-the-Game:
 		Otherwise:
 			If the turn count is greater than 120:
 				End the story finally saying "You got your snack, but with all the time it took, you achieved the unfortunate rank of Insomniac."
+				
+Volume 5 - Solution and Test
+
+Test solution with "GET OUT OF BED / TURN ON LIGHT / S / TURN ON LIGHT / S / TURN ON LIGHT / OPEN BREADBOX / OPEN FRIDGE / OPEN PANTRY / SEARCH FOODSTUFF / SEARCH DRY GOODS / GET JELLY / GET PB / GET BREAD / OPEN DRAWER / SEARCH FLATWARE / GET KNIFE / SPREAD JELLY ON BREAD / SPREAD PB ON BREAD / EAT SANDWICH / PUT JELLY IN FRIDGE / PUT PB IN PANTRY / PUT KNIFE IN SINK / CLOSE REFRIGERATOR / TURN OFF LIGHT / N / TURN OFF LIGHT / N / GET IN BED / TURN OFF LAMP".
