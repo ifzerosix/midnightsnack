@@ -1,10 +1,10 @@
 "Midnight Snack" by "I.F. Zerosix".
 The story headline is "An Interactive Fiction". 
-The story genre is "Comedy". 
-The release number is 5. 
+The story genre is "Slice of Life". 
+The release number is 6. 
 The story description is "You awaken in the middle of the night craving a snack. The story can be won in as little as 30 moves, but one misstep along the way could result in a cascading comedy of errors and a night of insomnia."
 The story creation year is 2023.
-Release along with the introductory booklet, introductory postcard, a website, the source text, a file of "License" called "License.txt" and an interpreter.
+Release along with the introductory booklet, solution[non public solution],introductory postcard, a website, the source text, a file of "License" called "License.txt" and an interpreter.
 
 Volume 1 - Extensions
 
@@ -344,14 +344,24 @@ Part 7 - Washing It
 Washing It is an action applying to one visible thing and requiring light. 
 Understand "wash [something]" as Washing It.
 
+Chapter 1 - Default Washing It
+
+Carry out washing it:
+	Say "You can't wash [the noun] here.";
+	Rule Fails.
+
+Chapter 2 - Washing It in the Laundry Room
+
 Check washing it when the Player is in the Laundry Room:
 	If the noun is wearable:
 		Let T be the time of day;
 		Increase T by one minute;
-		say "It is [T]. There are better times to do laundry.";
-	otherwise:
-		say "You would wreck [the noun].";
+		Say "It is [T]. There are better times to do laundry.";
+	Otherwise:
+		Say "You can't wash [the noun] here.";
 	Rule Fails.
+
+Chapter 3 - Washing It in the Kitchen
 	
 Check washing it when the Player is in the Kitchen:
 	If the noun is the dishes:
@@ -367,15 +377,23 @@ Check washing it when the Player is in the Kitchen:
 			say "The sink is full of dirty dishes. It might not be the best place to wash [the noun].";
 	Rule Fails.
 
-Check washing it when the noun is the butter knife:
-	Let T be the time of day;
-	Increase T by one minute;
-	say "It is [T]. There are better times to do the dishes.";
-	Rule Fails.
+Chapter 4 - Washing It in the Bathroom
+	
+Check Washing It when the Player is in the En Suite Bathroom and the noun is the Player:
+	If the sink faucets are switched on:
+		say "You wash up, using the bathroom sink.";
+		Now the b#it is nowhere;
+		Now the dol#lop is nowhere;
+		Now Player-Dirty is False;
+		Rule Succeeds;
+	Otherwise:
+		If the shower-faucets are switched on:
+			Try entering the shower;
+			Rule Succeeds;
+		Otherwise:
+			say "You will either need to [BeginHint]turn on the sink or get in the shower[EndHint].";
+		Rule Fails.
 
-Carry out washing it:
-	say "You don't need to wash [the noun] right now.";
-	Rule Fails.
 	
 Part 8 - Spreading It On
 
@@ -385,6 +403,22 @@ Understand "spread [something] on [something]" and "spread [something] onto [som
 Carry Out Spreading It On:
 	Try putting the noun on the second noun;
 	Rule Fails.
+	
+Check inserting the butter knife into the jelly:
+	If the Player encloses the bread:
+		Try putting the jelly on the bread;
+		Rule Succeeds;
+	Otherwise:
+		Say "You aren't holding anything to spread the jelly on.";
+		Rule Succeeds.
+	
+Check inserting the butter knife into the peanut butter:
+	If the Player encloses the bread:
+		Try putting the peanut butter on the bread;
+		Rule Succeeds;
+	Otherwise:
+		Say "You aren't holding anything to spread the peanut butter on.";
+		Rule Succeeds.
 
 Part 9 - Taking Something While Dirty
 
@@ -427,7 +461,7 @@ Help is an action out of world applying to nothing.
 Understand "help" as help.
 
 Carry Out Help:
-	Say "In interactive fiction, you type basic commands that the game translates into character actions.[Paragraph Break][Bold Type]Verb + Noun[Roman Type][Line Break]Verb and noun combinations are the simplest and most frequently used commands. These include actions like: [Bold Type]go north[Roman Type], [Bold Type]turn on the shower[Roman Type], or [Bold Type]examine the sandwich[Roman Type].[Paragraph Break][Bold Type]Verb + Noun + Second Noun[Roman Type][Line Break]Verb, noun, and second noun combinations allow two different objects to interact with one another. These include actions like: [Bold Type]spread the jelly on the bread[Roman Type], [Bold Type]point the remote control at the TV[Roman Type], or [Bold Type]unlock the blue door with the blue key[Roman Type].[Paragraph Break][Bold Type]Inventory[Roman Type][Line Break]You can see what you are wearing and carrying by typing [Bold Type]inventory[Roman Type] or [Bold Type]i[Roman Type]. In this game, the maximum number of things you can carry is [Bold Type]4[Roman Type], unless you find a portable container that allows you to carry more things.[Paragraph Break][Bold Type]Hints[Roman Type][Line Break]You can toggle the hint system on and off by typing [Bold Type]hints[Roman Type]. When the hint system is active, clues will appear in [Bold Type]bold[Roman Type] in the game text.";
+	Say "In interactive fiction, you type basic commands that the game translates into character actions.[Paragraph Break][Bold Type]Verb + Noun[Roman Type][Line Break]Verb and noun combinations are the simplest and most frequently used commands. These include actions like: [Bold Type]go north[Roman Type], [Bold Type]turn on the shower[Roman Type], or [Bold Type]examine the sandwich[Roman Type].[Paragraph Break][Bold Type]Verb + Noun + Second Noun[Roman Type][Line Break]Verb, noun, and second noun combinations allow two different objects to interact with one another. These include actions like: [Bold Type]spread the jelly on the bread[Roman Type], [Bold Type]point the remote control at the TV[Roman Type], or [Bold Type]unlock the blue door with the blue key[Roman Type].[Paragraph Break][Bold Type]Inventory[Roman Type][Line Break]You can see what you are wearing and carrying by typing [Bold Type]inventory[Roman Type] or [Bold Type]i[Roman Type]. In this game, the maximum number of things you can carry is [Bold Type]4[Roman Type], unless you find a portable container that allows you to carry more things.[Paragraph Break][Bold Type]Out-of-Game Commands[Roman Type][Line Break]Type [Bold Type]save[Roman Type] or [Bold Type]restore[Roman Type] to save or restore your progress. Toggle the hint system on and off by typing [Bold Type]hints[Roman Type]. When the hint system is active, clues will appear in [Bold Type]bold[Roman Type] in the game text.[Paragraph Break]Forgot where you are? Try typing [Bold Type]Look[Roman Type].";
 	Rule Fails.
 
 Part 11 - Hints
@@ -485,11 +519,16 @@ Part 5 - Player-Wet
 Player-Wet is a Truth State that varies. 
 Player-Wet is False.
 
+Part 6 - Knife-Dirty
+
+Knife-Dirty is a Truth State that varies. 
+Knife-Dirty is False.
+
 Volume 3 - The Player
 
 The Player is in your bed. 
 
-Understand "face", "hair", "hands", "feet", "body","my body" as Yourself.
+Understand "face", "hair", "hands", "hand", "feet", "body","my body", "finger", "fingers" as Yourself.
 
 The carrying capacity of the player is 4.
 
@@ -507,7 +546,7 @@ Check sleeping when the player is not in Your Bed:
 	Rule Fails.
 	
 Check sleeping when Player-Hungry is True:
-	say "You are way to hungry to sleep.";
+	say "You are way too hungry to sleep.";
 	Rule Fails.
 	
 Check sleeping when Player-Hungry is False and the Player is in Your Bed and the bedroom lamp is lit:
@@ -652,7 +691,7 @@ Check taking something when the player is enclosed by your bed and the noun is n
 	say "You can't take [the noun] until you get out of bed.";
 	Rule Fails.
 		
-Check taking your sweats when the Player does not enclose the sweats:
+Check taking your sweats when the Player does not enclose the sweats and the Player carries less than 4 things:
 	say "You take the sweatshirt and sweatpants.";
 	Now the printed name of the sweats is "your sweats";
 	Now the sweats are plural-named;
@@ -866,15 +905,22 @@ Check taking the bath towel when the Player does not enclose the bath towel and 
 	Say "If you want to dry off, you will need to [BeginHint]take off [a list of things worn by the player][EndHint].";
 	Rule Fails.
 	
-Check taking the wet bath towel when the Player does not enclose the bath towel and Player-Wet is True:
+Check taking the wet bath towel when the Player does not enclose the bath towel and Player-Wet is True and the Player carries less than 4 things:
 	Say "You take the bath towel. It is all wet! You can't dry yourself off with this.";
 	Now the Player carries the bath towel;
 	Rule Fails.
 
-Check taking the dry bath towel when the Player does not enclose the bath towel and Player-Wet is True and the Player wears nothing:	
+Check taking the dry bath towel when the Player does not enclose the bath towel and Player-Wet is True and the Player wears nothing and the Player carries less than 4 things:
 	Say "You take the bath towel and dry yourself off. Now, the bath towel is wet, but at least you are dry.";
 	Now the Player carries the bath towel;
 	Now Player-Wet is False;
+	Now the bath towel is wet;
+	Now the printed name of the bath towel is "wet bath towel";
+	Rule Succeeds.
+	
+Check taking the dry bath towel when the Player does not enclose the bath towel and Player-Wet is True and the Player wears nothing and the Player carries less than 4 things and the Player is in the shower and the shower-faucets are switched on:
+	Say "While the shower is still running, you reach out from the shower and take the bath towel. Now the towel is all wet.";
+	Now the Player carries the bath towel;
 	Now the bath towel is wet;
 	Now the printed name of the bath towel is "wet bath towel";
 	Rule Succeeds.
@@ -922,7 +968,7 @@ Check switching off the shower:
 	Try switching off the shower-faucets;
 	Rule Succeeds.
 	
-Check switching on the shower-faucets when the shower-faucets are switched off:
+Check switching on the shower-faucets when the shower-faucets are switched off and the Player is not enclosed by the shower:
 	say "You turn on the shower, and water sprays from the shower head.";
 	Now the shower-faucets are switched on;
 	Rule Succeeds.
@@ -934,102 +980,54 @@ Check switching off the shower-faucets when the shower-faucets are switched on:
 
 Check looking when the player is enclosed by the shower:
 	say "[bold type]En Suite Bathroom[Roman type] (in the shower) [paragraph break]";
-	say "You stand in your nice tiled shower[if the shower-faucets are switched on]. Warm water sprays down on [a list of things enclosed by the shower][Otherwise]. It is just [a list of things in the shower] in here[End If].";
+	say "You are standing in a tiled shower[If the shower-faucets are switched on and the Player carries something] with warm water spraying down on you and [a list of things carried by the Player][Otherwise if the shower-faucets are switched on] with warm water spraying down on you[End If].";
 	Rule Succeeds.
 	
 Check dropping something when the player is enclosed by the shower:
 	say "Best not to leave [those] here.";
 	Rule Fails.
 	
-Section 1 - Entering the Shower with the Faucets On
+Section 1 - Entering the Shower with the Shower On
 	
-[Washing Up the Right Way]
-Check entering the shower when the player is in the En Suite Bathroom and the shower-faucets are switched on and the player wears nothing and the Player carries nothing:	
-	Now Player-Dirty is False;
-	Now Player-Wet is True;
-	Now the bit is nowhere;
-	Now the dollop is nowhere;
-	Say "You get in the shower, and a spray of water washes you clean.";
-	Now the Player is in the shower;
-	Rule Succeeds.	
+Check entering the shower when the shower-faucets are switched on and the Player carries the PBJ sandwich:
+	End the story finally saying "The shower ruined your sandwich. You are going to be starving all night.".
 
-[Can't Carry Anything Into a Running Shower]
-Check entering the shower when the player is in the En Suite Bathroom and the player carries something and the shower-faucets are switched on:
-	say "The shower is running. It would be best to first set down [a list of things carried by the player].";
-	Rule Fails.
-	
-[A One-Time Warning that the Player is Going to Get Their Clothes Wet]
-Check entering the shower when the player is in the En Suite Bathroom and the shower-faucets are switched on and the player wears something dry and the Player carries nothing for the first time:
-	say "If you get in the shower right now, you will get [a list of things worn by the player] wet.";
-	Rule Fails.
-	
-[Showering with Their Clothes On]
-Check entering the shower when the player is in the En Suite Bathroom and the shower-faucets are switched on and the player wears something dry and the Player carries nothing:
-	Now the bit is nowhere;
-	Now the dollop is nowhere;
-	Now Player-Dirty is False;
-	Now Player-Wet is True;
-	say "You get into the shower, wearing [a list of things worn by the player]!";
-	if the player wears your favorite comfy PJs:
-		Now the printed name of your favorite comfy PJs is "your soaking wet PJs";
-	if the player wears the sweats:
-		Now the printed name of the sweats is "your soaking wet sweats";
-	if the player wears your robe:
-		Now the printed name of your robe is "your soaking wet robe";
-	If the Player wears the bath towel:
-		Now the printed name of the bath towel is "soaking wet bath towel";
-		Say "The bath towel is soaked! It slips off and falls to the shower floor.";
-		Now the bath towel is in the shower;
+Check entering the shower when the shower-faucets are switched on:
+	Say "You get into the shower.[Paragraph Break]";
 	soak-the-clothes;
 	Now the Player is in the shower;
 	Rule Succeeds.
 	
 Section 2 - Turning on the Shower While Standing In it
 	
-[Washing Up the Right Way]
-Check switching on the shower-faucets when the player is enclosed by the shower and the player wears nothing and the player carries nothing and the shower-faucets are switched off:
-	Now the shower-faucets are switched on;
-	Now the bit is nowhere;
-	Now the dollop is nowhere;
-	Now Player-Dirty is False;
-	Now Player-Wet is True;
-	say "You turn on the shower, and a spray of water washes you clean.";
-	Rule Succeeds.
-
-[Can't Turn on the Shower While Carrying Something]
-Check switching on the shower-faucets when the player is enclosed by the shower and the player carries something and the shower-faucets are switched off:
-	say "Not while you are carrying [a list of things carried by the player]!";
-	Rule Fails.
-
-[One-Time Warning the Player Will Get Their Clothes Wet]
-Check switching on the shower-faucets when the player is enclosed by the shower and the player wears something dry and the shower-faucets are switched off for the first time:
-	say "If you turn on the shower right now, you will get [a list of things worn by the player] wet.";
-	Rule Fails.
+Check switching on the shower-faucets when the player is enclosed by the shower and the Player carries the PBJ sandwich:
+	End the story finally saying "The shower ruined your sandwich. You are going to be starving all night.".
 	
-[Showering With Clothes On]
-Check switching on the shower-faucets when the player is enclosed by the shower and the player wears something dry and the player carries nothing and the shower-faucets are switched off:
+Check switching on the shower-faucets when the player is enclosed by the shower:
 	Now the shower-faucets are switched on;
-	Now the bit is nowhere;
-	Now the dollop is nowhere;
-	Now Player-Dirty is False;
-	Now Player-Wet is True;
-	Now the indefinite article of the bath towel is "the";
-	say "You turn on the shower while you are wearing [a list of things worn by the player]. Now, [a list of things worn by the player] [are] soaking wet!";
-	Now the indefinite article of the bath towel is "a";
-	if the player wears your favorite comfy PJs:
-		Now the printed name of your favorite comfy PJs is "your soaking wet PJs";
-	if the player wears the sweats:
-		Now the printed name of the sweats is "your soaking wet sweats";
-	if the player wears your robe:
-		Now the printed name of your robe is "your soaking wet robe";
-	If the Player wears the bath towel:
-		Now the printed name of the bath towel is "soaking wet bath towel";
+	say "You turn on the shower.[Paragraph Break]";
 	soak-the-clothes;
+	Try Looking;
 	Rule succeeds.		
 	
 Section 3 - Soaking the Clothes
 	
 To soak-the-clothes:
+	Now Player-Dirty is False;
+	Now Player-Wet is True;
+	Now the b#it is nowhere;
+	Now the dol#lop is nowhere;
+	If the Player carries the butter knife:
+		Now Knife-Dirty is False;
+		Now the printed name of the butter knife is "butter knife";
+	If the player wears your favorite comfy PJs:
+		Now the printed name of your favorite comfy PJs is "your soaking wet PJs";
+	If the player wears the sweats:
+		Now the printed name of the sweats is "your soaking wet sweats";
+	If the player wears your robe:
+		Now the printed name of your robe is "your soaking wet robe";
+	If the Player wears the bath towel:
+		Now the printed name of the bath towel is "soaking wet bath towel";
 	repeat with item running through things worn by the player:
 		now item is wet.	
 		
@@ -1083,17 +1081,9 @@ Check switching off the sink faucets when the sink faucets are switched on:
 	Now the sink faucets are switched off;
 	Rule Succeeds.
 
-Section 1 - Washing Up Using the Pedestal Sink
 
-Check Washing It when the Player is in the En Suite Bathroom and the noun is the Player:
-	If the sink faucets are switched on:
-		say "You wash up, using the bathroom sink.";
-		Now the bit is nowhere;
-		Now the dollop is nowhere;
-		Now Player-Dirty is False;
-	Otherwise:
-		say "You will either need to [BeginHint]turn on the sink faucets or get in the shower[EndHint].";
-	Rule Succeeds.
+
+
 	
 Chapter 6 - Toilet
 	
@@ -1428,11 +1418,11 @@ Check inserting the jelly into something:
 		Say "If you don't [BeginHint]put the jelly in the refrigerator[EndHint], it will go bad.";
 	Rule Fails.
 	
-A bit is nowhere. 
-A bit is wearable. 
-The printed name of the bit is "grape jelly on your fingers". 
-The indefinite article of the bit is "some". 
-The description of the bit is "Your fingers are covered in grape jelly."
+A b#it is nowhere. 
+A b#it is wearable. 
+The printed name of the b#it is "grape jelly on your fingers". 
+The indefinite article of the b#it is "some". 
+The description of the b#it is "Your fingers are covered in grape jelly."
 
 Check tasting the jelly:
 	Try eating the jelly;
@@ -1442,17 +1432,18 @@ Check eating the jelly when the Player does not enclose the jelly:
 	Say "You aren't holding the jelly.";
 	Rule Fails.
 	
-Check eating the jelly when the Player encloses the butter knife and the Player encloses the jelly and the Player does not wear the bit:
+Check eating the jelly when the Player encloses the butter knife and the Player encloses the jelly and the Player does not wear the b#it:
 	Say "You scoop out some jelly with the butter knife and taste it. Not bad[If Player-Hungry is True], but it does nothing for your hunger[End If].";
+	Now Knife-Dirty is True;
 	Rule Succeeds.
 
-Check eating the jelly when the Player does not enclose the butter knife and the Player does not wear the bit and the Player encloses the jelly:
+Check eating the jelly when the Player does not enclose the butter knife and the Player does not carry the b#it and the Player encloses the jelly:
 	Say "You scoop out some jelly with your fingers and eat it. Now, your fingers are covered in jelly[If Player-Hungry is True], and it does nothing for your hunger[End If].";
-	Now the Player wears the bit;
+	Now the Player carries the b#it;
 	Now Player-Dirty is True;
 	Rule Succeeds.
 	
-Check eating the jelly when the player wears the bit:
+Check eating the jelly when the player wears the b#it:
 	Say "Your fingers are already covered in jelly. Maybe you should [BeginHint]wash up[EndHint].";
 	Rule Fails.
 	
@@ -1469,7 +1460,7 @@ Check putting the jelly on the bread when the Player does not enclose the knife:
 				Rule Fails;
 			Otherwise:
 				Now Player-Dirty is True;
-				Now the Player wears the bit;
+				Now the Player carries the b#it;
 				Say "Using your fingers, [Run paragraph on]";
 				Spread-the-Jelly;
 				Rule Succeeds.
@@ -1493,6 +1484,7 @@ Check putting the jelly on the bread when the Player encloses the butter knife:
 To Spread-the-Jelly:
 	Say "you spread some jelly on the bread.[paragraph break]"; 
 	Now the bread is jellied;
+	Now Knife-Dirty is True;
 	If the bread is buttered:
 		Now the Player carries a PBJ sandwich;
 		Now the bread is nowhere;
@@ -1540,11 +1532,11 @@ Check searching the dry goods:
 	Now the peanut butter is in the pantry;
 	Rule Succeeds.
 	
-A dollop is nowhere. 
-A dollop is wearable. 
-The printed name of the dollop is "creamy peanut butter on your fingers". 
-The indefinite article of the dollop is "some". 
-The description of the dollop is "Your fingers are covered in peanut butter."
+A dol#lop is nowhere. 
+A dol#lop is wearable. 
+The printed name of the dol#lop is "creamy peanut butter on your fingers". 
+The indefinite article of the dol#lop is "some". 
+The description of the dol#lop is "Your fingers are covered in peanut butter."
 
 Check tasting the peanut butter:
 	Try eating the peanut butter;
@@ -1554,17 +1546,18 @@ Check eating the peanut butter when the Player does not enclose the peanut butte
 	Say "You aren't holding the peanut butter.";
 	Rule Fails.
 	
-Check eating the peanut butter when the Player encloses the butter knife and the Player encloses the peanut butter and the Player does not wear the dollop:
+Check eating the peanut butter when the Player encloses the butter knife and the Player encloses the peanut butter and the Player does not wear the dol#lop:
 	Say "You scoop out some peanut butter with the butter knife and taste it. Not bad[If Player-Hungry is True], but it does nothing for your hunger[End If].";
+	Now Knife-Dirty is True;
 	Rule Succeeds.
 	
-Check eating the peanut butter when the Player does not enclose the butter knife and the Player does not wear the dollop and the Player encloses the peanut butter:
+Check eating the peanut butter when the Player does not enclose the butter knife and the Player does not carry the dol#lop and the Player encloses the peanut butter:
 	Say "You scoop out some peanut butter with your fingers and eat it. Now, your fingers are covered in peanut butter[If Player-Hungry is True], and it does nothing for your hunger[End If].";
-	Now the Player wears the dollop;
+	Now the Player carries the dol#lop;
 	Now Player-Dirty is True;
 	Rule Succeeds.
 	
-Check eating the peanut butter when the player wears the dollop:
+Check eating the peanut butter when the player wears the dol#lop:
 	Say "Your fingers are already covered in peanut butter. Maybe you should get cleaned up.";
 	Rule Fails.
 
@@ -1581,7 +1574,7 @@ Check putting the peanut butter on the bread when the Player does not enclose th
 				Rule Fails;
 			Otherwise:
 				Now Player-Dirty is True;
-				Now the Player wears the bit;
+				Now the Player carries the dol#lop;
 				Say "Using your fingers, [Run paragraph on]";
 				Spread-the-PB;
 				Rule Succeeds.
@@ -1605,6 +1598,7 @@ Check putting the peanut butter on the bread when the Player encloses the butter
 To Spread-the-PB:
 	Say "you spread some peanut butter on the bread.[paragraph break]"; 
 	Now the bread is buttered;
+	Now Knife-Dirty is True;
 	If the bread is jellied:
 		Now the Player carries a PBJ sandwich;
 		Now the bread is nowhere;
@@ -1620,7 +1614,7 @@ Section 2 - Bread
 A breadbox is a container in the kitchen. "A [BeginHint]breadbox[EndHint] is on the counter." 
 The breadbox is openable. 
 The breadbox is closed. 
-Understand "lid", "bread box" as the breadbox. 
+Understand "lid", "bread box", "box" as the breadbox. 
 The description is "It is a vintage stainless steel bread box. The [BeginHint]lid[EndHint] is currently [If the breadbox is open]open[Otherwise]closed."
 
 Some bread is in the breadbox. 
@@ -1680,19 +1674,25 @@ Check searching the flatware when the butter knife is nowhere:
 	Now the butter knife is in the kitchen drawer;
 	Rule Succeeds.
 	
-Check dropping the butter knife when the bread is buttered or the bread is jellied:
+Check dropping the butter knife when the player encloses the butter knife and Knife-Dirty is True:
 	Say "Gross! Why would you leave a [BeginHint]dirty[EndHint] butter knife just lying around?";
 	Rule Fails.
 	
-Check putting the butter knife on something when the bread is buttered or the bread is jellied:
+Check putting the butter knife on something when the player encloses the butter knife and Knife-Dirty is True:
 	Say "Gross! Why would you put a [BeginHint]dirty[EndHint] butter knife on [the second noun]?";
 	Rule Fails.
 	
-Check inserting the butter knife into something when the bread is buttered or the bread is jellied:
-	Say "Gross! Why would you put a [BeginHint]dirty[EndHint] butter knife in [the second noun]?";
+Check inserting the butter knife into something when the player encloses the butter knife and Knife-Dirty is True:
+	If the second noun is the jelly:
+		Continue the Action;
+	Otherwise:
+		If the second noun is the peanut butter:
+			Continue the Action;
+		Otherwise:
+			Say "Gross! Why would you put a [BeginHint]dirty[EndHint] butter knife in [the second noun]?";
 	Rule Fails.
 	
-Check inserting the butter knife into the kitchen-sink when the bread is buttered or the bread is jellied:
+Check inserting the butter knife into the kitchen-sink when the player encloses the butter knife and Knife-Dirty is True:
 	Say "You put the dirty knife into the kitchen sink with the other dirty dishes.";
 	Now the butter knife is in the kitchen-sink;
 	Rule Succeeds.
@@ -1846,3 +1846,9 @@ To Win-the-Game:
 Volume 5 - Solution and Test
 
 Test solution with "GET OUT OF BED / TURN ON LIGHT / S / TURN ON LIGHT / S / TURN ON LIGHT / OPEN BREADBOX / OPEN FRIDGE / OPEN PANTRY / SEARCH FOODSTUFF / SEARCH DRY GOODS / GET JELLY / GET PB / GET BREAD / OPEN DRAWER / SEARCH FLATWARE / GET KNIFE / SPREAD JELLY ON BREAD / SPREAD PB ON BREAD / EAT SANDWICH / PUT JELLY IN FRIDGE / PUT PB IN PANTRY / PUT KNIFE IN SINK / CLOSE REFRIGERATOR / TURN OFF LIGHT / N / TURN OFF LIGHT / N / GET IN BED / TURN OFF LAMP".
+
+Volume 6 - Release Updates
+
+[Release 5 (2023-01-01): First production Release]
+
+[Release 6 (2023-01-07): Updated Help, changed genre to Slice of Life, fixed grammar, simplified showering, fixed max items carried, added additional ways to spread the jelly and peanut butter on the bread]
